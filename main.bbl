@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{cook1971complexity}
+Stephen~A Cook.
+\newblock The complexity of theorem-proving procedures.
+\newblock In {\em Proceedings of the third annual ACM symposium on Theory of
+  computing}, pages 151--158, 1971.
+
+\bibitem{hopcroft2001introduction}
+John~E Hopcroft, Rajeev Motwani, and Jeffrey~D Ullman.
+\newblock Introduction to automata theory, languages, and computation.
+\newblock {\em Acm Sigact News}, 32(1):60--65, 2001.
+
+\end{thebibliography}

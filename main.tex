@@ -1,0 +1,104 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Plantilla para un artículo en LaTeX en español.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Qué tipo de documento estamos por comenzar:
+\documentclass[a4paper]{article}
+% Esto es para que el LaTeX sepa que el texto está en español:
+\usepackage[spanish]{babel}
+\selectlanguage{spanish}
+% Esto es para poder escribir acentos directamente:
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+
+%% Asigna un tamaño a la hoja y los márgenes
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Paquetes de la AMS
+\usepackage{amsmath, amsthm, amsfonts}
+%% Para añadir archivo∫s con extensión pdf, jpg, png or tif
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+
+%% Primero escribimos el título
+\title{Problema de la Satisfacibilidad Booleana}
+\author{Fernanda Domínguez Acosta, Ximena Sandoval del Hoyo, Raúl Murcia Yocupicio}
+}
+
+%% Después de "preámbulo", podemos empezar el documento
+
+\begin{document}
+%% Hay que decirle que incluya el título en el documento
+\maketitle
+
+%% Iniciamos "secciones" que servirán como subtítulos
+
+\section{Definiciones}
+
+\subsection{Definición de la Clase NP}
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+\subsection{Definición de la Clase NP-Completo}
+
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+\section{El problema de satisfacibilidad}
+%Descripción
+El problema de la satisfacibilidad booleana es un problema NP-completo\cite{cook1971complexity}.
+
+
+
+\subsection{Codificación del problema}
+
+Las variables se identifican con
+
+\section{Demostración}
+Para demostrar que SAT es NP-Completo, primero tenemos que demostrar que es de la clase NP.
+
+\subsection{SAT pertenece a la clase NP}
+así es
+
+\subsection{SAT pertenece a la clase NP-Completo}
+
+
+% Ejemplo de figurita que puede ayudar después
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.5\textwidth]{tesla.jpg}
+%\caption{\label{fig:tesla}Esta imagen se añadió en el menú Project.}
+%\end{figure}
+
+
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{main}
+
+% Nota
+%Para las bibliografías está rotísimo, para que salga todo hay que hacer:
+% pdflatex main.tex -f
+% bibtex main
+% pdflatex main.tex -f
+% pdflatex main.tex -f
+%
+% Dos veces al final
+
+\end{document}
