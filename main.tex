@@ -41,11 +41,35 @@
 
 \section{Definiciones}
 
+\subsection{Verificador}
+Para cierto tipo de problemas evadir búsquedas de fuerza bruta para encontrar
+soluciones a ellos no ha sido posible, por tanto no se conocen algoritmos para
+resolver dichos problemas en tiempo polinomial.
+Para estos problemas si bien no tenemos una forma rápida (i.e. en tiempo
+polinomial), si encontraramos una solución de alguna manera (usando un algoritmo
+de tiempo exponencial), podemos verificar facilmente dicha solución.
+Es decir, verificar la solución es más facil que determinar su existencia.
+
+Un verificador para un lenguaje $A$ es un algoritmo $V$, donde
+\begin{center}
+$A = \{w$ | $V$ acepta $\langle w, c\rangle$ para alguna cadena $c\}$
+\end{center}
+Determinamos el tiempo de un verificador solo en terminos de $w$, por lo que un
+\textbf{verificador en tiempo polinomial} corre en un tiempo polinomial sobre la
+longitud de $w$. Un lenguaje $A$ es polinomialmente verificable si tiene un
+verificador en tiempo polinomial.
+Este verificador utiliza información adicional almancenada en $c$ para verificar
+si $w \in A$; esta información se llama \textbf{certificado} o \textbf{prueba}.
+
 \subsection{Definición de Problema NP}
 
 Sea $L$ un lenguaje (un problema). Decimos que $L$ pertenece a la clase
 $\mathcal{NP} \Leftrightarrow \exists$ una MT \textbf{no determinista} $M$
-tal que $L = L(M)$ y $T_M(n)$ (Time-complexity de M) sea un polinomio.
+tal que $L = L(M)$ y $T_M(n)$ (Time-Complexity de $M$) sea un polinomio.
+
+Alternativamente, $L \in \mathcal{NP} \Leftrightarrow$ $L$ tiene verificadores
+en tiempo polinomial.
+
 
 %aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 %aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -93,15 +117,16 @@ Con esto podemos probar que si $P_2 \in \mathcal{P}$ entonces $P_1 \in \mathcal{
 
 Supongamos que podemos decidir si una cadena de longitud $n$ pertenece a $P_2$
 en un tiempo $\mathcal{O}(n^{k})$. Entonces podemos probar si una cadena de
-longitud $m$ pertenece a $P_1$ en un tiempo $\mathcal{O}(m^j + (cm^j)^k)$,
-donde $m^j$ cuenta el tiempo del algoritmo de construcción y $(cm^j)^k$ el
+longitud $m$ pertenece a $P_1$ en $\mathcal{O}(m^j + (cm^j)^k)$,
+donde $m^j$ corresponde al tiempo del algoritmo de construcción y $(cm^j)^k$ al
 tiempo para decidir si el resultado de la construcción pertenece a $P_2$.
 Notamos que al simplificar el tiempo para $P_1$ obtenemos
 $\mathcal{O}(m^j + (cm^{jk})$, donde $c$, $j$ y $k$ son constantes, por lo que
 el tiempo es polinomial sobre $m$, por lo que podemos concluir que $P_1 \in \mathcal{P}$.
 
 \subsection{Definición de Problema NP-Completo}
-Sea $L$ un lenguaje (un problema). Decimos que $L$ es $NP-completo$ si las siguientes afirmaciones son correctas sobre $L$:
+Sea $L$ un lenguaje (un problema). Decimos que $L$ es $NP-completo$ si las
+siguientes afirmaciones son correctas sobre $L$:
 \begin{enumerate}
   \item $L \in \mathcal{NP}$
   \item Para todo $L' \in \mathcal{NP}$, existe una reducción polinómica de $L'$ a $L$
