@@ -29,7 +29,7 @@
 %% Primero escribimos el título
 \title{Problema de la Satisfacibilidad Booleana}
 \author{Fernanda Domínguez Acosta, Ximena Sandoval del Hoyo, Raúl Murcia Yocupicio}
-}
+
 
 %% Después de "preámbulo", podemos empezar el documento
 
@@ -41,24 +41,22 @@
 
 \section{Definiciones}
 
-\subsection{Definición de la Clase NP}
+\subsection{Definición de Problema NP}
 
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+Sea $L$ un lenguaje (un problema). Decimos que $L$ pertenece a la clase
+$\mathcal{NP} \Leftrightarrow \exists$ una MT \textbf{no determinista} $M$
+tal que $L = L(M)$ y $T_M(n)$ (Time-complexity de M) sea un polinomio.
 
-
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
+%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 
-\subsection{Reducciones en tiempo polinomial}
+\subsection{Reducciones polinómicas}
 Nuestra principal metodología para probar que un problema $P_2 \notin \mathcal{P}$
 es la reducción de un problema $P_1$, sabiendo que $P_1 \notin \mathcal{P}$, a $P_2$.
 
@@ -74,12 +72,19 @@ para probar ``Si $P_1$ no está en $\mathcal{P}$ entonces $P_2$ tampoco está en
 Supongams que dada una instancia de $P_1$ de longitud $m$, podemos encontrarnos
 con dos situaciones:
 \begin{itemize}
-  \item El algoritmo de construcción produce una cadena de salida con longitud $2^{m}$, que entra en el hipotético algoritmo polinomial de $P_2$. Si este algoritmo toma un tiempo $\mathcal{O}(n^k)$ entonces con una cadena de longitud $2^{m}$ tomará un tiempo $\mathcal{O}(2^{km})$, exponencial sobre $m$.
-  \item El algoritmo de construcción produce una cadena de salida con longitud $m$ pero toma un tiempo exponencial en ello, como $\mathcal{O}(2^m)$. Ahora el algoritmo de decisión para $P_2$ toma un tiempo polinomial $\mathcal{O}(n^k)$ para una entrada de tamaño $n$ pero el algoritmo de decisión para $P_1$ toma $\mathcal{O}(2^{m} + m^{k})$.
+  \item El algoritmo de construcción produce una cadena de salida con longitud
+  $2^{m}$, que entra en el hipotético algoritmo polinomial de $P_2$. Si este
+  algoritmo toma un tiempo $\mathcal{O}(n^k)$ entonces con una cadena de
+  longitud $2^{m}$ tomará un tiempo $\mathcal{O}(2^{km})$, exponencial sobre $m$.
+  \item El algoritmo de construcción produce una cadena de salida con longitud
+  $m$ pero toma un tiempo exponencial en ello, como $\mathcal{O}(2^m)$. Ahora el
+  algoritmo de decisión para $P_2$ toma un tiempo polinomial $\mathcal{O}(n^k)$
+  para una entrada de tamaño $n$ pero el algoritmo de decisión para $P_1$ toma
+  $\mathcal{O}(2^{m} + m^{k})$.
 \end{itemize}
 Estos hechos implican que $P_1 \notin \mathcal{P}$ y $P_2 \in \mathcal{P}$
 
-La restricción correcta para una construcción de $P_1$ a $P_2$ es que requiere
+La restricción correcta para una construcción de $P_1$ a $P_2$ es que  ésta requiere
 un tiempo polinomial sobre el tamaño de la entrada.
 Esto implica que dicha construcción toma un tiempo $\mathcal{O}(m^{j})$ es un
 cadena de longitud $m$, por lo que la instancia de $P_2$ no puede ser mayor al
@@ -95,9 +100,14 @@ Notamos que al simplificar el tiempo para $P_1$ obtenemos
 $\mathcal{O}(m^j + (cm^{jk})$, donde $c$, $j$ y $k$ son constantes, por lo que
 el tiempo es polinomial sobre $m$, por lo que podemos concluir que $P_1 \in \mathcal{P}$.
 
-\subsection{Definición de la Clase NP-Completo}
+\subsection{Definición de Problema NP-Completo}
+Sea $L$ un lenguaje (un problema). Decimos que $L$ es $NP-completo$ si las siguientes afirmaciones son correctas sobre $L$:
+\begin{enumerate}
+  \item $L \in \mathcal{NP}$
+  \item Para todo $L' \in \mathcal{NP}$, existe una reducción polinómica de $L'$ a $L$
+\end{enumerate}
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+%AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 \section{El problema de satisfacibilidad}
 %Descripción
