@@ -25,6 +25,10 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
+%% Para dar tamaño a las celdas de las tablas
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
 
 %% Primero escribimos el título
 \title{Problema de la Satisfacibilidad Booleana}
@@ -151,6 +155,107 @@ Para demostrar que SAT es NP-Completo, primero tenemos que demostrar que es de l
 así es
 
 \subsection{SAT pertenece a la clase NP-Completo}
+Ahora para demostrar que el SAT pertenece a la clase NP-Completo, debemos demostrar que todo problema en la clase $\mathcal{NP}$ se puede reducir al SAT en un tiempo polinomial. Esto es, necesitamos encontrar un algoritmo que, dada una instancia $w$ de un problema $L \in \mathcal{NP}$, nos devuelva una fórmula en lógica de orden cero (una instancia del SAT) tal que esta sea satisfacible si y sólo si $w\in L$\\
+
+%. Nótese que este algoritmo se generaliza para toda NTM (Non-deterministic Turing %Machine) $M$, por lo que si se fija para una sola $M$, el resultado de este sólo %dependerá de $w$.
+
+Sea $L \in \mathcal{NP}$. Por definición, existe una NTM (Non-deterministic Turing Machine) $M$ que acepta a $L$ como lenguaje. Sea $w$ una instancia de $L$, de forma que la entrada del algoritmo será $<M,w>$. Podemos asumir que la NTM $M$ no realiza mas de $p(n)$ pasos sobre la cadena $w$ de longitud $n$ en cualquier rama, donde $p(n)$ es un polinomio (por definición de la clase $\mathcal{NP}$). Esto significa que podemos asumir que el tamaño de la cinta utilizado será de a lo más, $p(n)$ celdas. También podemos asumir que $M$ nunca escribe el símbolo $\sqcup$, y nunca mueve el cabezal hacia la izquierda de su posición inicial (Máquina de Turing con cinta semi-infinita).
+Partiendo de esto, es posible representar una descripción instantánea (en este caso la configuración inicial) de la máquina de la siguiente manera.
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{| c | c | c | C{2cm} | c | c | C{4cm} | c |}
+      \hline
+      $q_0$ & $w_1$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
+      \hline
+      %$w_1$ & $p$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
+      %\hline
+      %\multicolumn{8}{|c|}{$\cdots$}\\
+      %\hline
+      %$f$ & $w_1$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
+      %\hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+De esta forma, un historial de cómputo (o una rama de cómputo de la NTM) se puede representar como una tabla cuyos renglones son las descripciones instantáneas en cada paso.\\
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{| c | c | c | C{2cm} | c | c | C{4cm} | c |}
+      \hline
+      $q_0$ & $w_1$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
+      \hline
+      $w_1$ & $p$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
+      \hline
+      \multicolumn{8}{|c|}{$\cdots$}\\
+      \hline
+      $f$ & $w_1$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+Una tabla con un historial de cómputo válido que llega a un estado de aceptación existe, si y sólo si, la cadena $w$ es aceptada por $M$. Por lo tanto buscaremos una fórmula que nos permita determinar si existe dicho historial de cómputo.\\
+Consideremos la siguiente notación para describir a la tabla.
+$$X_{i,j,\alpha} = \text{TRUE} \iff X_{i,j} = \alpha$$
+donde $X_{i,j}$ es el contenido de la casilla de la tabla, en el renglón $i$ y columna $j$, y el símbolo $\alpha \in Q\cup\Gamma$, donde $Q$ es el conjunto de estados y $\Gamma$ es el alfabeto de cinta de $M$.\\
+
+Cuatro restricciones deben cumplirse para determinar si dicho historial existe.
+
+\begin{itemize}
+  \item 1. Cada celda tiene un símbolo único ($\Phi_{\text{CELL}}$).
+  \item 2. El primer renglón representa la configuración inicial de $M$ ($\Phi_{\text{START}}$).
+  \item 3. Aparece un estado de aceptación en alguna casilla ($\Phi_{\text{ACCEPT}}$).
+  \item 4. Todo movimiento en la tabla es legal ($\Phi_{\text{MOVE}}$).
+\end{itemize}
+
+De forma que si se cumplen estas cuatro restricciones, significa que $M$ acepta a $w$, por lo tanto debemos encontrar una fórmula que represente estas cuatro restricciones.
+Se propone la siguiente:
+$$\Phi = \Phi_{\text{CELL}} \land \Phi_{\text{START}} \land \Phi_{\text{ACCEPT}} \land \Phi_{\text{MOVE}}$$
+Se describirá la construcción de cada una de ellas.
+
+\paragraph{Restricción 1. $\Phi_{\text{CELL}}$.}
+
+Para esta restricción simplemente debemos tener un OR exclusivo entre los $X_{i,j,\alpha}$ $\forall \alpha \in Q \cup \Gamma$ con $i$, $j$ fijos. Esto es:
+\begin{align*}
+  \Phi_{\text{CELL}} = \bigvee_{i,j} \Big[ &(X_{i,j,\alpha_1} \land \overline{X_{i,j,\alpha_2}} \land \dots \land \overline{X_{i,j,\alpha_k}}) \\
+  &(\overline{X_{i,j,\alpha_1}} \land X_{i,j,\alpha_2} \land \dots \land \overline{X_{i,j,\alpha_k}})\\
+  &\vdots\\
+  &\overline{(X_{i,j,\alpha_1}} \land \overline{X_{i,j,\alpha_2}} \land \dots \land X_{i,j,\alpha_k}) \Big]
+\end{align*}
+El tamaño de este término es del orden de $p(n)^2$, pues $k$ es una constante que depende de $M$.
+
+\paragraph{Restricción 2. $\Phi_{\text{START}}$.}
+
+Para la siguiente restricción es necesario verificar que en el primer renglón se encuentre la configuración inicial. Esto es:
+$$\Phi_{\text{START}} = X_{1,1,q_0} \land X_{1,2,w_1} \land X_{1,3,w_2} \land \dots \land X_{1,n+1,w_n} \land X_{1,n+2,\sqcup} \land X_{1,n+3,\sqcup} \land \dots \land X_{1,p(n)+1,\sqcup}$$
+donde $w_i$ es el i-ésimo símbolo de la cadena $w$. Este término depende de $w$, pero siempre tendrá longitud de $p(n)$.
+
+\paragraph{Restricción 3. $\Phi_{\text{ACCEPT}}$.}
+
+Esta restricción solo tiene que asegurarse que en algún punto se llegue al estado de aceptación, pues podemos suponer que el estado de aceptación es único y que además, marca una parada en la NTM.
+$$\Phi_{\text{ACCEPT}} = \bigvee_{i, j} X_{i,j,p}$$
+donde p es el estado de aceptación. Esta restricción solo depende de $M$, y tiene tamaño del orden de $p(n)^2$.
+
+
+\paragraph{Restricción 4. $\Phi_{\text{MOVE}}$}
+
+Esta última restricción se logra con una conjunción de $\Omega_i$ con $i = 1,2,\dots,p(n)$, donde cada $\Omega_i$ significa que la descripción instantánea del renglón $i+1$ puede proceder correctamente a la del renglón $i$. Esto se logra asegurando dos cosas en cada $\Omega_i$.
+
+\begin{itemize}
+  \item $\xi_{i,j}$ significa:
+    \begin{itemize}
+      \item \textbf{a)} $X_{i,j} \not \in Q$ ($i.e$ $X_{i,j}$ no es un estado).
+      \item \textbf{b)} Si no hay un estado adyacente a $X_{i,j}$ ($i.e.$ ni $X_{i,j-1}$ ni $X_{i,j+1}$ son estados), entonces $X_{i,j}=X_{i+1,j}$.
+    \end{itemize}
+  \item $\psi_{i,j}$ significa:
+    \begin{itemize}
+      \item \textbf{a)} $X_{i,j} \in Q$ ($i.e$ $X_{i,j}$ es un estado).
+      \item \textbf{b)} Existe un posible movimiento de $M$ tal que $X_{i,j}$ es el estado y $X_{i,j+1}$ es el símbolo escaneado, de forma que $X_{i,j-1} X_{i,j} X_{i,j+1}$ se transforma en $X_{i+1,j-1} X_{i+1,j} X_{i+1,j+1}$. Es importante mencionar que si $X_{i,j}$ es un estado de aceptación, entonces existe la opción de no realizar movimiento, de forma que las siguientes descripciones instantáneas serán iguales.
+    \end{itemize}
+\end{itemize}
+De esta forma tenemos que:
+$$\Omega_i = \bigwedge_{j=1}^{p(n)}\left(\xi_{i,j}\land\psi_{i,j}\right)$$
 
 
 % Ejemplo de figurita que puede ayudar después
