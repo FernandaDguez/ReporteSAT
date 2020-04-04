@@ -97,7 +97,7 @@ es la reducción de un problema $P_1$, sabiendo que $P_1 \notin \mathcal{P}$, a 
 Sin embargo, la existencia de un algoritmo llamado ``Construct'' no es suficiente
 para probar ``Si $P_1$ no está en $\mathcal{P}$ entonces $P_2$ tampoco está en $\mathcal{P}$''.
 
-Supongams que dada una instancia de $P_1$ de longitud $m$, podemos encontrarnos
+Supongamos que dada una instancia de $P_1$ de longitud $m$, podemos encontrarnos
 con dos situaciones:
 \begin{itemize}
   \item El algoritmo de construcción produce una cadena de salida con longitud
@@ -140,19 +140,72 @@ siguientes afirmaciones son correctas sobre $L$:
 
 \section{El problema de satisfacibilidad}
 %Descripción
-El problema de la satisfacibilidad booleana es un problema $NP-Completo$\cite{cook1971complexity}.
+El problema de la satisfacibilidad booleana consiste en determinar si una fórmula booleana (en lógica de orden cero) es o no satisfacible. Es decir, si existe una interpretación para la fórmula tal que ésta sea verdadera.
 
+Una fórmula booleana es una expresión que consiste en:
+
+\begin{itemize}
+  \item Variables booleanas, pueden tomar el valor de verdadero o falso (1 o 0).
+  \item Operadores binarios $\wedge$ (AND) y $\vee$ (OR)
+  \item Operador unario $\neg$ (NOT)
+\end{itemize}
+
+
+Un ejemplo de fórmula booleana es:
+
+
+
+$\neg x_{1} \wedge (x_{2}\vee x_{3})$
+
+
+
+Una interpretación es una asignación de valores (verdadero o falso) para las variables de una expresión boobleana. Una expresión booleana de $n$ variables tiene $2^{n}$ interpretaciones.
+
+
+El valor de una fórmula $F$ para una interpretación $I$, $F(I)$ es el resultado de reemplazar cada variable de $F$ con el valor que le asigna $I$. Se dice que $I$ satisface a $F$ si $F(I) = 1$; es decir, el valor de $F$ bajo $I$ es verdadero.
+
+
+
+La satisfacibilidad de una fórmula no depende de los nombres de las variables, sólo de si dos apariciones de las variables corresponden a la misma o a diferentes, es decir, si en las veces que aparece la variable tiene mismo operador unario.
+
+
+Por ejemplo, la fórmula: $ x \wedge \neg x$ no es satisfacible.
 
 
 \subsection{Codificación del problema}
 
-Las variables se identifican con
+
+El alfabeto para representar cadenas de fórmulas binarias comprende: los símbolos de operadores binarios ($\wedge$ y $\vee$), símbolos de paréntesis y cada una de las variables $x_{i}$. Donde $i$ puede estar representado tanto en código binario como con un número de ceros o unos igual al número que representa. Pues ambas codificaciones de $i$ no afectan a la ejecución del algoritmo.
+
+
+Entonces, hablamos del problema SAT como un lenguaje y este es el conjunto de formulas booleanas codificadas satisfacibles.
+
 
 \section{Demostración}
-Para demostrar que SAT es $NP-Completo$, primero tenemos que demostrar que es de la clase NP.
+
+Separamos la demostración en dos casos:
+
+\begin{enumerate}
+  \item SAT es de la clase $\mathcal{NP}$
+  \item SAT es de la clase $\mathcal{NP}-completo$
+\end{enumerate}
+
+Pues para demostrar que SAT pertenece a la clase $\mathcal{NP}-completo$, necesitamos primero demostrar que pertenece a la clase $\mathcal{NP}$, seguido hay que demostrar que todo lenguaje en NP se puede reducir a una instancia del problema SAT.
 
 \subsection{SAT pertenece a la clase NP}
-así es
+
+
+Utilizando la capacidad de no determinismo de una NTM (Non-deterministic Turing Machine), esta puede determinar una interpretación $I$ para la fórmula $X$ dada y aceptarla si $X(I)=1$. 
+
+
+Si $X$ es de longitud $n$, entonces para $M$ NTM multicinta tomará $\mathcal{O}(n)$. Observemos el no determinismo de $M$, que al final del proceso puede tener hasta $2^{n}$ configuraciones diferentes y cad una de estas representa las diferentes combinaciones de asignació de valores lógicos de las variables de $X$.
+
+
+Después, el proceso de aceptación es determinista: se evalúa $X(I)$ y si $X(I)=1$ entonces $M$ acepta a $X$ y este toma  $\mathcal{O}(n^{2})$ sobre una $M$.
+
+
+Por lo tanto tomaría $\mathcal{O}(n^{4})$ para una NTM de una cinta realizar el algoritmo. Es decir, el lenguaje es aceptado por una NTM en un tiempo polinomial y pertenece a $\mathcal{NP}$
+
 
 \subsection{SAT pertenece a la clase NP-Completo}
 Ahora para demostrar que el SAT pertenece a la clase $NP-Completo$, debemos demostrar que todo problema en la clase $\mathcal{NP}$ se puede reducir al SAT en un tiempo polinomial. Esto es, necesitamos encontrar un algoritmo que, dada una instancia $w$ de un problema $L \in \mathcal{NP}$, nos devuelva una fórmula en lógica de orden cero (una instancia del SAT) tal que esta sea satisfacible si y sólo si $w\in L$\\
