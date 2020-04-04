@@ -68,8 +68,9 @@ si $w \in A$; esta información se llama \textbf{certificado} o \textbf{prueba}.
 \subsection{Definición de Problema NP}
 
 Sea $L$ un lenguaje (un problema). Decimos que $L$ pertenece a la clase
-$\mathcal{NP} \Leftrightarrow \exists$ una MT \textbf{no determinista} $M$
-tal que $L = L(M)$ y $T_M(n)$ (Time-Complexity de $M$) sea un polinomio.
+$\mathcal{NP} \Leftrightarrow \exists$ una MT \textbf{no determinista}
+(Non-deterministic Turing Machine) $M$ tal que $L = L(M)$ y $T_M(n)$
+(Time-Complexity de $M$) sea un polinomio.
 
 Alternativamente, $L \in \mathcal{NP} \Leftrightarrow$ $L$ tiene verificadores
 en tiempo polinomial.
@@ -195,7 +196,7 @@ Pues para demostrar que SAT pertenece a la clase $\mathcal{NP}-completo$, necesi
 \subsection{SAT pertenece a la clase NP}
 
 
-Utilizando la capacidad de no determinismo de una NTM (Non-deterministic Turing Machine), esta puede determinar una interpretación $I$ para la fórmula $X$ dada y aceptarla si $X(I)=1$. 
+Utilizando la capacidad de no determinismo de una NTM (Non-deterministic Turing Machine), esta puede determinar una interpretación $I$ para la fórmula $X$ dada y aceptarla si $X(I)=1$.
 
 
 Si $X$ es de longitud $n$, entonces para $M$ NTM multicinta tomará $\mathcal{O}(n)$. Observemos el no determinismo de $M$, que al final del proceso puede tener hasta $2^{n}$ configuraciones diferentes y cad una de estas representa las diferentes combinaciones de asignació de valores lógicos de las variables de $X$.
