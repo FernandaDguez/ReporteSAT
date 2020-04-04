@@ -140,7 +140,7 @@ siguientes afirmaciones son correctas sobre $L$:
 
 \section{El problema de satisfacibilidad}
 %Descripción
-El problema de la satisfacibilidad booleana es un problema NP-completo\cite{cook1971complexity}.
+El problema de la satisfacibilidad booleana es un problema $NP-Completo$\cite{cook1971complexity}.
 
 
 
@@ -149,13 +149,13 @@ El problema de la satisfacibilidad booleana es un problema NP-completo\cite{cook
 Las variables se identifican con
 
 \section{Demostración}
-Para demostrar que SAT es NP-Completo, primero tenemos que demostrar que es de la clase NP.
+Para demostrar que SAT es $NP-Completo$, primero tenemos que demostrar que es de la clase NP.
 
 \subsection{SAT pertenece a la clase NP}
 así es
 
 \subsection{SAT pertenece a la clase NP-Completo}
-Ahora para demostrar que el SAT pertenece a la clase NP-Completo, debemos demostrar que todo problema en la clase $\mathcal{NP}$ se puede reducir al SAT en un tiempo polinomial. Esto es, necesitamos encontrar un algoritmo que, dada una instancia $w$ de un problema $L \in \mathcal{NP}$, nos devuelva una fórmula en lógica de orden cero (una instancia del SAT) tal que esta sea satisfacible si y sólo si $w\in L$\\
+Ahora para demostrar que el SAT pertenece a la clase $NP-Completo$, debemos demostrar que todo problema en la clase $\mathcal{NP}$ se puede reducir al SAT en un tiempo polinomial. Esto es, necesitamos encontrar un algoritmo que, dada una instancia $w$ de un problema $L \in \mathcal{NP}$, nos devuelva una fórmula en lógica de orden cero (una instancia del SAT) tal que esta sea satisfacible si y sólo si $w\in L$\\
 
 %. Nótese que este algoritmo se generaliza para toda NTM (Non-deterministic Turing %Machine) $M$, por lo que si se fija para una sola $M$, el resultado de este sólo %dependerá de $w$.
 
@@ -168,12 +168,6 @@ Partiendo de esto, es posible representar una descripción instantánea (en este
       \hline
       $q_0$ & $w_1$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
       \hline
-      %$w_1$ & $p$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
-      %\hline
-      %\multicolumn{8}{|c|}{$\cdots$}\\
-      %\hline
-      %$f$ & $w_1$ & $w_2$ & $\dots$ & $w_n$ & $\sqcup$ & $\dots$ & $\sqcup$\\
-      %\hline
     \end{tabular}
   \end{center}
 \end{table}
@@ -214,7 +208,7 @@ Se propone la siguiente:
 $$\Phi = \Phi_{\text{CELL}} \land \Phi_{\text{START}} \land \Phi_{\text{ACCEPT}} \land \Phi_{\text{MOVE}}$$
 Se describirá la construcción de cada una de ellas.
 
-\paragraph{Restricción 1. $\Phi_{\text{CELL}}$.}
+\paragraph{Restricción 1. ($\Phi_{\text{CELL}}$).}
 
 Para esta restricción simplemente debemos tener un OR exclusivo entre los $X_{i,j,\alpha}$ $\forall \alpha \in Q \cup \Gamma$ con $i$, $j$ fijos. Esto es:
 \begin{align*}
@@ -225,38 +219,103 @@ Para esta restricción simplemente debemos tener un OR exclusivo entre los $X_{i
 \end{align*}
 El tamaño de este término es del orden de $p(n)^2$, pues $k$ es una constante que depende de $M$.
 
-\paragraph{Restricción 2. $\Phi_{\text{START}}$.}
+\paragraph{Restricción 2. ($\Phi_{\text{START}}$).}
 
 Para la siguiente restricción es necesario verificar que en el primer renglón se encuentre la configuración inicial. Esto es:
 $$\Phi_{\text{START}} = X_{1,1,q_0} \land X_{1,2,w_1} \land X_{1,3,w_2} \land \dots \land X_{1,n+1,w_n} \land X_{1,n+2,\sqcup} \land X_{1,n+3,\sqcup} \land \dots \land X_{1,p(n)+1,\sqcup}$$
 donde $w_i$ es el i-ésimo símbolo de la cadena $w$. Este término depende de $w$, pero siempre tendrá longitud de $p(n)$.
 
-\paragraph{Restricción 3. $\Phi_{\text{ACCEPT}}$.}
+\paragraph{Restricción 3. ($\Phi_{\text{ACCEPT}}$).}
 
 Esta restricción solo tiene que asegurarse que en algún punto se llegue al estado de aceptación, pues podemos suponer que el estado de aceptación es único y que además, marca una parada en la NTM.
 $$\Phi_{\text{ACCEPT}} = \bigvee_{i, j} X_{i,j,p}$$
 donde p es el estado de aceptación. Esta restricción solo depende de $M$, y tiene tamaño del orden de $p(n)^2$.
 
 
-\paragraph{Restricción 4. $\Phi_{\text{MOVE}}$}
+\paragraph{Restricción 4. ($\Phi_{\text{MOVE}}$).}
 
 Esta última restricción se logra con una conjunción de $\Omega_i$ con $i = 1,2,\dots,p(n)$, donde cada $\Omega_i$ significa que la descripción instantánea del renglón $i+1$ puede proceder correctamente a la del renglón $i$. Esto se logra asegurando dos cosas en cada $\Omega_i$.
 
 \begin{itemize}
   \item $\xi_{i,j}$ significa:
-    \begin{itemize}
-      \item \textbf{a)} $X_{i,j} \not \in Q$ ($i.e$ $X_{i,j}$ no es un estado).
-      \item \textbf{b)} Si no hay un estado adyacente a $X_{i,j}$ ($i.e.$ ni $X_{i,j-1}$ ni $X_{i,j+1}$ son estados), entonces $X_{i,j}=X_{i+1,j}$.
-    \end{itemize}
+  \begin{enumerate}
+    \item $X_{i,j} \not \in Q$ ($i.e$ $X_{i,j}$ no es un estado).
+    \item Si no hay un estado adyacente a $X_{i,j}$ ($i.e.$ ni $X_{i,j-1}$ ni $X_{i,j+1}$ son estados), entonces $X_{i,j}=X_{i+1,j}$.
+  \end{enumerate}
   \item $\psi_{i,j}$ significa:
-    \begin{itemize}
-      \item \textbf{a)} $X_{i,j} \in Q$ ($i.e$ $X_{i,j}$ es un estado).
-      \item \textbf{b)} Existe un posible movimiento de $M$ tal que $X_{i,j}$ es el estado y $X_{i,j+1}$ es el símbolo escaneado, de forma que $X_{i,j-1} X_{i,j} X_{i,j+1}$ se transforma en $X_{i+1,j-1} X_{i+1,j} X_{i+1,j+1}$. Es importante mencionar que si $X_{i,j}$ es un estado de aceptación, entonces existe la opción de no realizar movimiento, de forma que las siguientes descripciones instantáneas serán iguales.
-    \end{itemize}
+  \begin{enumerate}
+    \item $X_{i,j} \in Q$ ($i.e$ $X_{i,j}$ es un estado).
+    \item Existe un posible movimiento de $M$ tal que $X_{i,j}$ es el estado y $X_{i,j+1}$ es el símbolo escaneado, de forma que $X_{i,j-1} X_{i,j} X_{i,j+1}$ se transforma en $X_{i+1,j-1} X_{i+1,j} X_{i+1,j+1}$. Es importante mencionar que si $X_{i,j}$ es un estado de aceptación, entonces existe la opción de no realizar movimiento, de forma que las siguientes descripciones instantáneas serán iguales.
+  \end{enumerate}
 \end{itemize}
+
 De esta forma tenemos que:
 $$\Omega_i = \bigwedge_{j=1}^{p(n)}\left(\xi_{i,j}\land\psi_{i,j}\right)$$
 
+Comenzando por $\xi_{i,j}$ la obtenemos de la siguiente forma.
+Sean $q_0$, $q_1$, $\dots$, $q_m$ los estados de $M$ y $Z_0$, $Z_1$, $\dots$, $Z_r$ los símbolos de su alfabeto de cinta.
+\begin{align*}
+  \xi_{i,j}=
+  &(\overline{X_{i,j,q_0} \lor X_{i,j,q_1} \lor\dots\lor X_{i,j,q_m}}) \land\\
+  &[(X_{i,j-1,q_0} \lor X_{i,j-1,q_1} \lor\dots\lor X_{i,j-1,q_m}) \lor\\
+  &(X_{i,j+1,q_0} \lor X_{i,j+1,q_1} \lor\dots\lor X_{i,j+1,q_m}) \lor\\
+  &(X_{i,j,Z_0}\land X_{i,j+1,Z_0})\lor(X_{i,j,Z_1}\land X_{i,j+1,Z_1})\lor\dots\lor
+  (X_{i,j,Z_r}\land X_{i,j+1,Z_r})]
+\end{align*}
+
+La primera línea corresponde al inciso {\bfseries 1}, mientras que el resto corresponde al inciso {\bfseries 2}, expresado con conectivos $\lor$ y $\lnot$. La última línea corresponde a la conclusión de dicho condicional, y las dos anteriores, a la hipotésis.\\
+
+Ahora para expresar a $\psi_{i,j}$, esta debe representar todas las posibles ventanas de $2 \times 3$. Observemos que los posibles rectángulos están completamente definidos por la función de transición $\delta$ de $M$.
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{c | c | c | c | c}
+      \  & \  & \  & \  & \   \\
+      \hline
+      $\ $ & $X_{i,j-1}$ & $X_{i,j}$ & $X_{i,j+1}$ & $\ $ \\
+      \hline
+      $\ $ & $X_{i+1,j-1}$ & $X_{i+1,j}$ & $X_{i+1,j+1}$ & $\ $ \\
+      \hline
+      \  & \  & \  & \  & \
+    \end{tabular}
+  \end{center}
+\end{table}
+
+Por ejemplo, si tenemos una regla del tipo $(p,C,L) \in \delta (q,A)$, lo transformamos en la siguiente expresión, con su respectiva representación visual.
+
+$$X_{i,j-1,B} \land X_{i,j,q} \land X_{i,j+1,A} \land X_{i+1,j-1,p} \land X_{i+1,j,B} \land X_{i+1,j+1,C}$$
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{c | c | c | c | c}
+      \  & \  & \  & \  & \   \\
+      \hline
+      $\ $ & $B$ & $q$ & $A$ & $\ $ \\
+      \hline
+      $\ $ & $p$ & $B$ & $C$ & $\ $ \\
+      \hline
+      \  & \  & \  & \  & \
+    \end{tabular}
+  \end{center}
+\end{table}
+
+En caso de que la regla sea del tipo $(p,C,R) \in \delta (q,A)$, se construye de forma análoga, pero moviendo el cabezal hacia la derecha.
+
+De esta forma, el término $\psi_{i,j}$ se representa de la siguiente forma:
+$$\psi_{i,j} = \Big(\bigvee_{q \in Q} X_{i,j,q}\Big) \land \Big(\bigvee_{\kappa\in K}W_{\kappa,i,j}\Big)$$
+Donde las $W_\kappa$ son las expresiones que representan todas las posibles ventanas de $2 \times 3$ posibles de acuerdo a $\delta$, en la posición $i,j$. Es importante destacar que tanto para $\xi$ como para $\psi$ hay que considerar los dos casos extremos, $i=1$ e $i=p(n)$, pues en vez de tener ventanas de $2 \times 3$, estas serán de $2 \times 2$.\\
+
+Así, podemos expresar la restricción 4 como:
+$$\Phi_{\text{MOVE}}=\bigwedge_{i=0}^{p(n)}\Omega_i$$
+Siendo su tamaño $\mathcal{O}(p(n)^2)$ pero constante con respecto a $w$, ya que sólo depende de $M$ y de la longitud de $w$.
+
+\paragraph{Conclusión.}
+Se ha construido una expresión $\Phi$ a partir de $<M,w>$.
+$$\Phi = \Phi_{\text{CELL}} \land \Phi_{\text{START}} \land \Phi_{\text{ACCEPT}} \land \Phi_{\text{MOVE}}$$
+Si $\Phi$ es satisfacible, entonces existe una tabla que representa un historial de cómputo que lleva a un estado de aceptación, de forma que $w \in L$, y de forma contraria, si $w \in L$, entonces existe un historial de cómputo que lleva a un estado de aceptacion, por lo que existe una tabla que representa, luego $\Phi$ es satisfacible.
+Sin embargo, podemos observar que sólo $\Phi_{\text{START}}$ depende de la cadena $w$, y el resto dependen de $M$ y de la longitud de $w$ solamente.\\
+En una multicinta, se puede realizar este algoritmo, con una complejidad de $\mathcal{O}(p(n)^2)$, por lo que en una MT determinista de una cinta, se puede realizar con una complejidad de $\mathcal{O}(p(n)^4)$.
+De esta manera, se ha encontrado una reducción polinomial al SAT que se generaliza para todo lenguaje $L \in \mathcal{NP}$, por lo tanto, el Problema de Satisfacibilidad Booleana (SAT) pertenece a la clase $NP-Completo$.
 
 % Ejemplo de figurita que puede ayudar después
 %\begin{figure}
